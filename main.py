@@ -1,8 +1,9 @@
 from constants import *
 from logger import log_state, log_event
-from player import *
-from asteroid import *
+from player import Player
+from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 import pygame
 import sys
 
@@ -16,18 +17,23 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+#Pygame Groups
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
+#Pygame Containers
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
+    Shot.containers = (shots, drawable, updatable)
 
+#Declare Player class and Asteroidfield
     my_asteroidfield = AsteroidField()
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     
-    #Play Loop
+#Play Loop
     while True:
         log_state()
         for event in pygame.event.get():
